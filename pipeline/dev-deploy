@@ -1,3 +1,6 @@
 #!/bin/bash
 
 echo "process deploy"
+
+tar cvzf pipeline.tar.gz .
+echo ${KEY}

@@ -4,4 +4,4 @@ echo "process test"
 
 source env/bin/activate
 export APP_SETTINGS="development"
-python main.py
+python main.py &

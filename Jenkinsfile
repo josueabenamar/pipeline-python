@@ -35,7 +35,10 @@ node
 			stage("Deploy")
 			{
 				echo "deploying"
-				sh "./pipeline/dev-deploy"
+				withCredentials([file(credentialsId:"aws_devops", variable:"KEY")])
+				{
+					sh "./pipeline/dev-deploy"
+				}
 			}
 
 			break
