@@ -4,3 +4,6 @@ echo "process deploy"
 
 tar cvzf pipeline.tar.gz .
 echo ${KEY}
+
+scp -i ${KEY} -o StrictHostKeyChecking=no pipeline.tar.gz ubuntu@ec2-18-194-55-151.eu-central-1.compute.amazonaws.com:/work/dev/deploys/python
+ssh -i ${KEY} -o StrictHostKeyChecking=no ubuntu@ec2-18-194-55-151.eu-central-1.compute.amazonaws.com "cd /work/dev/deploys/python; tar xvf pipeline.tar.gz"
