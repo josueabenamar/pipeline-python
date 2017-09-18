@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo "process build"
+
+virtualenv -p python3.5 env
+source env/bin/activate
+
+if [ $APP_SETTINGS = "production" ]; then
+	pip install -r requirements/production.txt
+fi
+
+if [ $APP_SETTINGS = "development" ]; then
+	pip install -r requirements/development.txt
+fi

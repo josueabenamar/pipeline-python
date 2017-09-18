@@ -1,0 +1,8 @@
+env
+environ.rc
+*.pyc
+__pychache__
+.cache/
+.idea/
+.coverage
+.ipynb_checkpoints/
