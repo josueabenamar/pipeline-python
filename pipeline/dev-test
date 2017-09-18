@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "process test"
+
+source env/bin/activate
+export APP_SETTINGS="development"
+python main.py

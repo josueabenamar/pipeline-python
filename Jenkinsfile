@@ -4,10 +4,7 @@ node
 	switch("${env.BRANCH_NAME}")
 	{
 		case ~/master$/:
-
 			echo "production pipeline"
-			sh "./pipeline/config-prod"
-
 			break
 
 		case ~/develop$/:
@@ -21,28 +18,24 @@ node
 
 				echo "downloading last version"
 				checkout scm
-
-				echo "initializing"
-				sh "./pipeline/config-dev"
-				sh "./pipeline/process-init"
 			}
 
 			stage("Build")
 			{
 				echo "building"
-				sh "./pipeline/process-build"
+				sh "./pipeline/dev-build"
 			}
 
 			stage("Test")
 			{
 				echo "testing"
-				sh "./pipeline/process-test"
+				sh "./pipeline/dev-test"
 			}
 
 			stage("Deploy")
 			{
 				echo "deploying"
-				sh "./pipeline/process-deploy"
+				sh "./pipeline/dev-deploy"
 			}
 
 			break
