@@ -1,5 +1,22 @@
 #!/bin/bash
 
-echo "deploying"
+export TARGET=$1
+export WORKSPACE=$2
+export DESTINATION=$3
+export SCRIPT=$4
 
-tar -xf target.tar.gz -C python
+cd $WORKSPACE
+kill $(cat $DESTINATION/pid)
+rm -rf $DESTINATION
+mkdir $DESTINATION
+tar -xzf $TARGET -C $DESTINATION
+
+cd $DESTINATION
+source env/bin/activate
+export APP_SETTINGS="development"
+python main.py > log 2>&1 &
+echo $! > pid
+
+cd $WORKSPACE
+rm $TARGET
+rm $SCRIPT
