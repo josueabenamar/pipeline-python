@@ -12,6 +12,7 @@ mkdir $DESTINATION
 tar -xzf $TARGET -C $DESTINATION
 
 cd $DESTINATION
+export LC_ALL=C
 virtualenv -p python3.5 env
 source env/bin/activate
 export APP_SETTINGS="development"
