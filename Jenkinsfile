@@ -56,8 +56,8 @@ node
 						export DEPLOY_DEST="python"
 						export DEPLOY_SCRIPT="dev-deploy-host"
 
-						echo "$target" $TARGET
-						echo "$$target" ${TARGET}
+						echo "1key" $KEY
+						echo "2key" ${KEY}
 						
 						tar --exclude='.git' --exclude='.gitignore' --exclude='pipeline' --exclude='Jenkinsfile' -czf $TARGET .
 
