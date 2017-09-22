@@ -49,10 +49,10 @@ node
 				withCredentials([file(credentialsId:"aws_devops", variable:"KEY")])
 				{
 					sh '''
-						export TARGET="target.tar.gz"
+						export TARGET="develop.tar.gz"
 						export DESTINATION="ubuntu@ec2-18-194-55-151.eu-central-1.compute.amazonaws.com"
 						export DEPLOY_PATH="/work/dev/deploys"
-						export DEPLOY_DEST="python"
+						export DEPLOY_DEST="python-pipeline"
 						export DEPLOY_SCRIPT="develop"
 
 						tar --exclude=".git" --exclude=".gitignore" --exclude="deploy" --exclude="Jenkinsfile" -czf deploy/$TARGET .
