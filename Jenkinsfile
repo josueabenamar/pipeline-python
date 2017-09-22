@@ -49,6 +49,7 @@ node
 				withCredentials([file(credentialsId:"aws_devops", variable:"KEY")])
 				{
 					sh '''
+						#!/bin/bash -l
 						export TARGET="target.tar.gz"
 						export DESTINATION="ubuntu@ec2-18-194-55-151.eu-central-1.compute.amazonaws.com"
 						export DEPLOY_PATH="/work/dev/deploys"
