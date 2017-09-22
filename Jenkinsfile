@@ -53,16 +53,17 @@ node
 						export DESTINATION="ubuntu@ec2-18-194-55-151.eu-central-1.compute.amazonaws.com"
 						export DEPLOY_PATH="/work/dev/deploys"
 						export DEPLOY_DEST="python"
-						export DEPLOY_SCRIPT="dev-deploy-host"
+						export DEPLOY_SCRIPT="develop"
 
-						tar --exclude=".git" --exclude=".gitignore" --exclude="pipeline" --exclude="Jenkinsfile" -czvf $TARGET .
+						tar --exclude=".git" --exclude=".gitignore" --exclude="pipeline" --exclude="deploy" --exclude="Jenkinsfile" -czvf deploy/$TARGET .
 
 						ls
+						ls deploy
 
 						echo "send target"
-						scp -i $KEY -o StrictHostKeyChecking=no $TARGET $DESTINATION:$DEPLOY_PATH
+						scp -i $KEY -o StrictHostKeyChecking=no deploy/$TARGET $DESTINATION:$DEPLOY_PATH
 						echo "send deploy"
-						scp -i $KEY -o StrictHostKeyChecking=no pipeline/$DEPLOY_SCRIPT $DESTINATION:$DEPLOY_PATH
+						scp -i $KEY -o StrictHostKeyChecking=no deploy/$DEPLOY_SCRIPT $DESTINATION:$DEPLOY_PATH
 						echo "execute deploy"
 						ssh -i $KEY -o StrictHostKeyChecking=no $DESTINATION "$DEPLOY_PATH/$DEPLOY_SCRIPT $TARGET $DEPLOY_PATH $DEPLOY_DEST $DEPLOY_SCRIPT"
 						'''
