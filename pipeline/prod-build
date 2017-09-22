@@ -1,8 +1,0 @@
-#!/bin/bash
-
-echo "process build"
-
-virtualenv -p python3.5 env
-source env/bin/activate
-export APP_SETTINGS="production"
-pip install -r requirements/production.txt
