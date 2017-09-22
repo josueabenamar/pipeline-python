@@ -49,17 +49,13 @@ node
 				withCredentials([file(credentialsId:"aws_devops", variable:"KEY")])
 				{
 					sh '''
-						#!/bin/bash -l
 						export TARGET="target.tar.gz"
 						export DESTINATION="ubuntu@ec2-18-194-55-151.eu-central-1.compute.amazonaws.com"
 						export DEPLOY_PATH="/work/dev/deploys"
 						export DEPLOY_DEST="python"
-						export DEPLOY_SCRIPT="dev-deploy-host"
+						export DEPLOY_SCRIPT="dev-deploy-host"echo "target" $TARGET
 
-						echo "1key" $KEY
-						echo "2key" ${KEY}
-						
-						tar --exclude='.git' --exclude='.gitignore' --exclude='pipeline' --exclude='Jenkinsfile' -czf $TARGET .
+						tar --exclude=".git" --exclude=".gitignore" --exclude="pipeline" --exclude="Jenkinsfile" -czf $TARGET .
 
 						scp -i $KEY -o StrictHostKeyChecking=no $TARGET $DESTINATION:$DEPLOY_PATH
 						scp -i $KEY -o StrictHostKeyChecking=no pipeline/$DEPLOY_SCRIPT $DESTINATION:$DEPLOY_PATH
