@@ -56,6 +56,9 @@ node
 						export DEPLOY_DEST="python"
 						export DEPLOY_SCRIPT="dev-deploy-host"
 
+						echo "$target" $TARGET
+						echo "$$target" ${TARGET}
+						
 						tar --exclude='.git' --exclude='.gitignore' --exclude='pipeline' --exclude='Jenkinsfile' -czf $TARGET .
 
 						scp -i $KEY -o StrictHostKeyChecking=no $TARGET $DESTINATION:$DEPLOY_PATH
