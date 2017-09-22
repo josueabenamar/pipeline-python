@@ -25,7 +25,7 @@ node
 				echo "building"
 				sh '''
 					virtualenv -p python3.5 env
-					source env/bin/activate
+					. env/bin/activate
 					export APP_SETTINGS="development"
 					pip install -r requirements/development.txt
 					deactivate
@@ -36,7 +36,7 @@ node
 			{
 				echo "testing"
 				sh '''
-					source env/bin/activate
+					. env/bin/activate
 					export APP_SETTINGS="development"
 					python main.py &
 					deactivate
