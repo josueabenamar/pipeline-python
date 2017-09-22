@@ -23,13 +23,24 @@ node
 			stage("Build")
 			{
 				echo "building"
-				sh "./pipeline/dev-build"
+				sh '''
+					virtualenv -p python3.5 env
+					source env/bin/activate
+					export APP_SETTINGS="development"
+					pip install -r requirements/development.txt
+					deactivate
+					'''
 			}
 
 			stage("Test")
 			{
 				echo "testing"
-				sh "./pipeline/dev-test"
+				sh '''
+					source env/bin/activate
+					export APP_SETTINGS="development"
+					python main.py &
+					deactivate
+					'''
 			}
 
 			stage("Deploy")
@@ -37,7 +48,19 @@ node
 				echo "deploying"
 				withCredentials([file(credentialsId:"aws_devops", variable:"KEY")])
 				{
-					sh "./pipeline/dev-deploy"
+					sh '''
+						export TARGET="target.tar.gz"
+						export DESTINATION="ubuntu@ec2-18-194-55-151.eu-central-1.compute.amazonaws.com"
+						export DEPLOY_PATH="/work/dev/deploys"
+						export DEPLOY_DEST="python"
+						export DEPLOY_SCRIPT="dev-deploy-host"
+
+						tar --exclude='.git' --exclude='.gitignore' --exclude='pipeline' --exclude='Jenkinsfile' -czf $TARGET .
+
+						scp -i $KEY -o StrictHostKeyChecking=no $TARGET $DESTINATION:$DEPLOY_PATH
+						scp -i $KEY -o StrictHostKeyChecking=no pipeline/$DEPLOY_SCRIPT $DESTINATION:$DEPLOY_PATH
+						ssh -i $KEY -o StrictHostKeyChecking=no $DESTINATION "$DEPLOY_PATH/$DEPLOY_SCRIPT $TARGET $DEPLOY_PATH $DEPLOY_DEST $DEPLOY_SCRIPT"
+						'''
 				}
 			}
 
