@@ -53,7 +53,7 @@ node
 						export DESTINATION="ubuntu@ec2-18-194-55-151.eu-central-1.compute.amazonaws.com"
 						export DEPLOY_PATH="/work/dev/deploys"
 						export DEPLOY_DEST="python"
-						export DEPLOY_SCRIPT="dev-deploy-host"echo "target" $TARGET
+						export DEPLOY_SCRIPT="dev-deploy-host"
 
 						tar --exclude=".git" --exclude=".gitignore" --exclude="pipeline" --exclude="Jenkinsfile" -czf $TARGET .
 
