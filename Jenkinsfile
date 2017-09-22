@@ -55,10 +55,15 @@ node
 						export DEPLOY_DEST="python"
 						export DEPLOY_SCRIPT="dev-deploy-host"
 
-						tar --exclude=".git" --exclude=".gitignore" --exclude="pipeline" --exclude="Jenkinsfile" -czf $TARGET .
+						tar --exclude=".git" --exclude=".gitignore" --exclude="pipeline" --exclude="Jenkinsfile" -czvf $TARGET .
 
+						ls
+
+						echo "send target"
 						scp -i $KEY -o StrictHostKeyChecking=no $TARGET $DESTINATION:$DEPLOY_PATH
+						echo "send deploy"
 						scp -i $KEY -o StrictHostKeyChecking=no pipeline/$DEPLOY_SCRIPT $DESTINATION:$DEPLOY_PATH
+						echo "execute deploy"
 						ssh -i $KEY -o StrictHostKeyChecking=no $DESTINATION "$DEPLOY_PATH/$DEPLOY_SCRIPT $TARGET $DEPLOY_PATH $DEPLOY_DEST $DEPLOY_SCRIPT"
 						'''
 				}
